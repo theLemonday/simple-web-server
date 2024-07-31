@@ -16,7 +16,7 @@ ENV NODE_ENV production
 
 # Install pnpm.
 RUN --mount=type=cache,target=/root/.npm \
-    npm install -g pnpm@${PNPM_VERSION}
+	npm install -g pnpm@${PNPM_VERSION}
 
 WORKDIR /usr/src/app
 
@@ -25,9 +25,9 @@ WORKDIR /usr/src/app
 # Leverage a bind mounts to package.json and pnpm-lock.yaml to avoid having to copy them into
 # into this layer.
 RUN --mount=type=bind,source=package.json,target=package.json \
-    --mount=type=bind,source=pnpm-lock.yaml,target=pnpm-lock.yaml \
-    --mount=type=cache,target=/root/.local/share/pnpm/store \
-    pnpm install --prod --frozen-lockfile
+	--mount=type=bind,source=pnpm-lock.yaml,target=pnpm-lock.yaml \
+	--mount=type=cache,target=/root/.local/share/pnpm/store \
+	pnpm install --prod --frozen-lockfile
 
 # Run the application as a non-root user.
 USER node
@@ -39,4 +39,4 @@ COPY . .
 EXPOSE 3000
 
 # Run the application.
-CMD node server.js
+CMD ["node" "server.js"]
